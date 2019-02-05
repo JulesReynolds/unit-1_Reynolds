@@ -17,11 +17,11 @@ function cities(){
         },
         {
             city: 'Lusaka',
-            population: 17000
+            population: 1700000
         },
         {
             city: 'Maputo',
-            population: 110117
+            population: 1101170
         },
         {
             city: 'Johannesburg',
@@ -45,37 +45,36 @@ function cities(){
         //add the row's html string to the table
         $("table").append(rowHtml);
     };
-
-    addColumns(cityPop);
-    addEvents();
 };
+
+//call the initialize function when the document has loaded
+$(document).ready(initialize);
 
 //copy & pasted debug.js below
 
 //function to add city population data to columns in table
-function addColumns(cityPop){ 
+function addColumns(cities){
     //loops information through table rows based on value of i
-    $("tr").each(function(i){
+    $('tr').each(function(i){
 //if statement for object i
         if (i == 0){
 //appends City Size to table header when i = 0
             $(this).append('<th>City Size</th>');
         } else {
 //creates variable citySize 
-            var citySize; 
+            var citySize;
 //evaluates values of cityPop: if less than 100,000, citySize defined as small
             if (cityPop[i-1].population < 100000){
                 citySize = 'Small';
 //if cityPop is less than 500,000, citySize defined as medium
-            }
-            else if (cityPop[i-1].population < 500000){
-                citySize = 'Medium';
+            } else if (cityPop[i-1].population < 500000){
+                citysize = 'Medium';
 //if cityPop is greater than 500,000, citySize defined as large
             } else {
                 citySize = 'Large';
             };
 //appends citySize values to table data
-            $(this).append('<td>' + citySize + '</td>');
+            $this.append('<td>citySize</td>');
         };
     });
 };
@@ -83,15 +82,15 @@ function addColumns(cityPop){
 //function to add mouseover events to table
 function addEvents(){
 //defines mouseover function for table 
-    $('table').on('mouseover', function(){
+    $('#table').mouseover(function(){
         //defines color variable
-        var color = "rgb(";
+        var color = "rgb";
 //loops color variable for i 
         for (var i=0; i<3; i++){
 //defines random number 0 - 255
             var random = Math.round(Math.random() * 255);
 //rgb color equals color + random number value
-            color += random;
+            color += "random";
 //if i < 2 (for smaller cities) ??
             if (i<2){
                 color += ",";
@@ -103,15 +102,11 @@ function addEvents(){
         $(this).css('color', color);
     };
 //creates clickme function
-    function clickMe(){
+    function clickme(){
 // logs alert
         alert('Hey, you clicked me!');
     };
 //applies clickme function to table
-    $('table').on('click', clickMe);
-
-    });
-}; 
-
-//call the initialize function when the document has loaded
-$(document).ready(initialize);
+    $('table').on('click', clickme);
+});
+}
