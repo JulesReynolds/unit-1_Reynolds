@@ -1,13 +1,11 @@
-var mydiv = document.getElementById("mydiv");
-mydiv.innerHTML = "Hello World";
-
-
-//initialize function called when the script loads
+//add city population data
 function initialize(){
-    cities();
+	cities();
+	loadGeoJson();
+
 };
 
-//function to create a table with cities and their populations
+ //function to create a table with cities and their populations
 function cities(){
     //define two arrays for cities and population
     var cityPop = [
@@ -47,10 +45,9 @@ function cities(){
     };
 
     addColumns(cityPop);
-    addEvents();
-};
 
-//copy & pasted debug.js below
+ };
+    
 
 //function to add city population data to columns in table
 function addColumns(cityPop){ 
@@ -80,38 +77,50 @@ function addColumns(cityPop){
     });
 };
 
-//function to add mouseover events to table
-function addEvents(){
-//defines mouseover function for table 
-    $('table').on('mouseover', function(){
-        //defines color variable
-        var color = "rgb(";
-//loops color variable for i 
-        for (var i=0; i<3; i++){
-//defines random number 0 - 255
-            var random = Math.round(Math.random() * 255);
-//rgb color equals color + random number value
-            color += random;
-//if i < 2 (for smaller cities) ??
-            if (i<2){
-                color += ",";
-            //otherwise ??
-            } else {
-                color += ")";
-        };
-//applies color to citySize events
-        $(this).css('color', color);
+ function loadGeoJson(){
+    	//define variable to hold data
+    	var mydata;
+    	//basic jQuery ajax method
+    	$.ajax("data/megacities.geojson", {
+        dataType: "json",
+        success: function(response){
+            mydata = response;
+            //mydata undefined
+            console.log(mydata)
+        }
+    }); 
+    	//mydata defined
+    	console.log(mydata)
     };
-//creates clickme function
-    function clickMe(){
-// logs alert
-        alert('Hey, you clicked me!');
-    };
-//applies clickme function to table
-    $('table').on('click', clickMe);
 
-    });
-}; 
+//Debug Script Lab 3
 
-//call the initialize function when the document has loaded
+//define Ajaxfunction
+function debugAjax(){
+	//define mydata to hold data
+	var mydata;
+
+	//define debugCallback function
+	function debugCallback(response){
+		//appends GeoJSON
+		$(mydiv).append('<br>GeoJSON data:<br>' + JSON.stringify(mydata));
+		//appends geojson string data to mydiv
+		$(mydiv).append('GeoJSON data: ' + JSON.stringify(mydata));
+			};
+
+	//basic ajax method, callback function with response parameter 
+	$.ajax("data/megacities.geojson", {
+		dataType: "json",
+		success: function(response){
+			mydata = response; 
+			debugCallback(mydata)
+		}
+
+	});
+		
+		};
+
+
+$(document).ready(debugAjax);
 $(document).ready(initialize);
+	
